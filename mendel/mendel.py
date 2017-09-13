@@ -4,7 +4,6 @@ import matplotlib.pyplot as plt
 import matplotlib.animation as plta 
 import time
 
-
 def m(z,c):
     return z*z + c
 
@@ -12,9 +11,9 @@ def in_set(c,N):
     z = c
     for n in range(1,N):
         if np.abs(z) > 2:
-            return 0 
+            return n 
         z = m(z,c)
-    return 1
+    return n
 
 def mendelbrot(N):
     x = np.linspace(-2,2,N)*np.ones((N,N))
@@ -27,22 +26,28 @@ def time_m(N):
     mendelbrot(N)
     return time.time() - t0
 
-def plot_mendel(N):
-    plt.imshow(mendelbrot(N),cmap="Greys",interpolation="nearest")
+def _plot_mendel(N,cmap='Greys'):
+    img = plt.imshow(mendelbrot(N),cmap=cmap,interpolation="nearest")
     plt.annotate('N = '+str(N),
 		xy=(0, 0), xycoords='data',
-		xytext=(.85, .05), textcoords='axes fraction',
+		xytext=(.8, .05), textcoords='axes fraction',
 		bbox=dict(boxstyle="round", fc="0.9"))
-    plt.savefig("N"+str(N)+".png")
-    #plt.show()
+    plt.colorbar(img)
+    
+def plot_mendel(N,cmap='Greys'):
+    _plot_mendel(N,cmap)
+    plt.show()
+
+def save_mendel(N,cmap='Greys',fname=''):
+    _plot_mendel(N,cmap)
+    plt.savefig(fname+"N"+str(N)+".png")
 
 def time_vs_N():
     N = np.arange(1,500)
-    vf = np.vectorize(time_m)
-    T = vf(N)
+    T = np.vectorize(time_m)(N)
     plt.plot(N,T)
     plt.show()
 
-n = [10,100,500,1000]
+n = [500]#[10,100,500,1000]
 for N in n:
-    plot_mendel(N)
+    save_mendel(N,cmap='jet',fname='color_')
