@@ -33,7 +33,8 @@ def plot_mendel(N):
 		xy=(0, 0), xycoords='data',
 		xytext=(.85, .05), textcoords='axes fraction',
 		bbox=dict(boxstyle="round", fc="0.9"))
-    plt.show()
+    plt.savefig("N"+str(N)+".png")
+    #plt.show()
 
 def time_vs_N():
     N = np.arange(1,500)
@@ -42,5 +43,6 @@ def time_vs_N():
     plt.plot(N,T)
     plt.show()
 
-N = 1000
-plot_mendel(N)
+n = [10,100,500,1000]
+for N in n:
+    plot_mendel(N)
