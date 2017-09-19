@@ -39,6 +39,9 @@ print("Percent  error: %err =",(h_acc-h)/h_acc*100,"%")
 
 
 plt.plot(x,y,'bo')
+plt.xlabel('$\\nu$ (Hz)')
+plt.ylabel('V (volt)')
+plt.savefig('reg_a.png')
 plt.plot(x,[m*xi+c for xi in x],'g-')
 plt.savefig('reg.png')
 plt.show()
